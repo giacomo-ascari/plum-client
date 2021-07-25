@@ -27,6 +27,7 @@ def on_disconnect(client, userdata, rc):
 
 def publish(client):
     data = {}
+    data["name"] = NAME
     data["cpu_percent"] = psutil.cpu_percent(interval=1) # val
     data["cpu_freq"] = psutil.cpu_freq() # current min max
     data["virtual_memory"] = psutil.virtual_memory() # total available percent used free
@@ -44,7 +45,9 @@ def main():
         client.on_connect = on_connect
         #client.on_message = on_message
         client.on_disconnect = on_disconnect
-        client.connect(BROKER, PORT, KEEPALIVE)
+        while client.connect(BROKER, PORT, KEEPALIVE) > 0:
+            print("still connecting...")
+            time.sleep(1)
         client.loop_start()
         while True:
             publish(client)
