@@ -41,12 +41,17 @@ def publish(client):
 
 def main():
     try:
+        connected = False
         client = mqtt.Client(NAME)
         client.on_connect = on_connect
         #client.on_message = on_message
         client.on_disconnect = on_disconnect
-        while client.connect(BROKER, PORT, KEEPALIVE) > 0:
-            print("still connecting...")
+        while not connected:
+            try:
+                client.connect(BROKER, PORT, KEEPALIVE)
+                connected = True
+            except:
+                print("still connecting...")
             time.sleep(1)
         client.loop_start()
         while True:
