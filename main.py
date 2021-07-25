@@ -15,21 +15,14 @@ KEEPALIVE = int(os.getenv("KEEPALIVE"))
 TOPIC = os.getenv("TOPIC")
 INTERVAL = int(os.getenv("INTERVAL"))
 
-def log(s):
-    with open("log.txt", "a+") as f:
-        f.write(s)
-
 def on_connect(client, userdata, rc, what):
     print("Connected.", userdata, rc, what)
-    log("Connected")
     client.subscribe(TOPIC)
 
 def on_message(client, userdata, msg):
-    log("Message received")
     print("Message received.", userdata, msg.payload.decode("utf-8"), msg.topic, msg.qos, msg.retain)
 
 def on_disconnect(client, userdata, rc):
-    log("Disconnected")
     print("Disconnected.")
 
 def publish(client):
@@ -57,11 +50,8 @@ def main():
             publish(client)
             time.sleep(INTERVAL)
     except KeyboardInterrupt:
-        log("keyboard")
         print("KEYBOARD INTERRUPT")
     except Exception as e:
-        log("error")
-        log(str(e))
         print("OTHER EXCEPTION:", e)
     finally:
         client.loop_stop()
