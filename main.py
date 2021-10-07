@@ -5,10 +5,11 @@ from dotenv import load_dotenv
 import psutil
 import time
 import json
+import socket
 
 load_dotenv()
 
-NAME = os.getenv("NAME")
+NAME = socket.gethostname()
 BROKER = os.getenv("BROKER")
 PORT = int(os.getenv("PORT"))
 KEEPALIVE = int(os.getenv("KEEPALIVE"))

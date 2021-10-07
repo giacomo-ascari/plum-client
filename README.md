@@ -1,7 +1,12 @@
 # plum-client
+
+## requirements
+pip3 install python-dotenv
+pip3 install paho-mqtt
+pip3 install psutil
+
 ## .ENV
 ```
-NAME=Pc#4342
 BROKER=broker.hivemq.com
 PORT=1883
 KEEPALIVE=60
